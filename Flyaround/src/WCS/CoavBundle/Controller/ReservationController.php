@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("reservation")
  */
-class reservationController extends Controller
+class ReservationController extends Controller
 {
     /**
      * Lists all reservation entities.

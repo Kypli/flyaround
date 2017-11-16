@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="flight")
  * @ORM\Entity(repositoryClass="WCS\CoavBundle\Repository\flightRepository")
  */
-class flight
+class Flight
 {
     /**
      * @var int
@@ -24,7 +24,8 @@ class flight
     /**
      * @var string
      *
-     * @ORM\Column(name="departure", type="string", length=32)
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $departure;
 
@@ -51,7 +52,6 @@ class flight
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="takeOffTime", type="datetime")
      */
     private $takeOffTime;

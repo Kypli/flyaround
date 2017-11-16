@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  *
  * @Route("flight")
  */
-class flightController extends Controller
+class FlightController extends Controller
 {
     /**
      * Lists all flight entities.

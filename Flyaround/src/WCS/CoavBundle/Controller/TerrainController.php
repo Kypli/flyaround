@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  *
  * @Route("terrain")
  */
-class terrainController extends Controller
+class TerrainController extends Controller
 {
     /**
      * Lists all terrain entities.
