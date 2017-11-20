@@ -24,7 +24,7 @@ class ReservationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $reservations = $em->getRepository('WCSCoavBundle:reservation')->findAll();
+        $reservations = $em->getRepository('WCSCoavBundle:Reservation')->findAll();
 
         return $this->render('reservation/index.html.twig', array(
             'reservations' => $reservations,

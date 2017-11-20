@@ -24,7 +24,7 @@ class TerrainController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $terrains = $em->getRepository('WCSCoavBundle:terrain')->findAll();
+        $terrains = $em->getRepository('WCSCoavBundle:Terrain')->findAll();
 
         return $this->render('terrain/index.html.twig', array(
             'terrains' => $terrains,

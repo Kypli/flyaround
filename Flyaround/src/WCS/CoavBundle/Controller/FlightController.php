@@ -2,7 +2,7 @@
 
 namespace WCS\CoavBundle\Controller;
 
-use WCS\CoavBundle\Entity\flight;
+use WCS\CoavBundle\Entity\Flight;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class FlightController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $flights = $em->getRepository('WCSCoavBundle:flight')->findAll();
+        $flights = $em->getRepository('WCSCoavBundle:Flight')->findAll();
 
         return $this->render('flight/index.html.twig', array(
             'flights' => $flights,
@@ -40,7 +40,7 @@ class FlightController extends Controller
     public function newAction(Request $request)
     {
         $flight = new Flight();
-        $form = $this->createForm('WCS\CoavBundle\Form\flightType', $flight);
+        $form = $this->createForm('WCS\CoavBundle\Form\FlightType', $flight);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class FlightController extends Controller
      * @Route("/{id}", name="flight_show")
      * @Method("GET")
      */
-    public function showAction(flight $flight)
+    public function showAction(Flight $flight)
     {
         $deleteForm = $this->createDeleteForm($flight);
 
@@ -79,7 +79,7 @@ class FlightController extends Controller
      * @Route("/{id}/edit", name="flight_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, flight $flight)
+    public function editAction(Request $request, Flight $flight)
     {
         $deleteForm = $this->createDeleteForm($flight);
         $editForm = $this->createForm('WCS\CoavBundle\Form\flightType', $flight);
@@ -104,7 +104,7 @@ class FlightController extends Controller
      * @Route("/{id}", name="flight_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, flight $flight)
+    public function deleteAction(Request $request, Flight $flight)
     {
         $form = $this->createDeleteForm($flight);
         $form->handleRequest($request);
@@ -125,7 +125,7 @@ class FlightController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(flight $flight)
+    private function createDeleteForm(Flight $flight)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('flight_delete', array('id' => $flight->getId())))

@@ -1,13 +1,13 @@
 wcs_coav_terrain:
-    resource: "@WCSCoavBundle/Controller/terrainController.php"
+    resource: "@WCSCoavBundle/Controller/TerrainController.php"
     type:     annotation
 
 wcs_coav_reservation:
-    resource: "@WCSCoavBundle/Controller/reservationController.php"
+    resource: "@WCSCoavBundle/Controller/ReservationController.php"
     type:     annotation
 
 wcs_coav_flight:
-    resource: "@WCSCoavBundle/Controller/flightController.php"
+    resource: "@WCSCoavBundle/Controller/FlightController.php"
     type:     annotation
 
 wcs_coav_plane_model:
