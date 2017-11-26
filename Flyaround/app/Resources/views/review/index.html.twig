@@ -4,8 +4,10 @@
 
 <h1>Review view</h1>
 <ul>
-    <li>
-        <a href="/">Retun to homepage</a>
-    </li>
+    {% for review in reviews %}
+        <li><a href="{{ path('review_show', { 'id': review.id }) }}">show {{ review.id }}</a></li>
+    {% endfor %}
+    <li><a href="{{ path('review_new') }}">New review </a></li>
+    <li><a href="/">Retun to homepage</a></li>
 </ul>
 {% endblock %}
