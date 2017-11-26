@@ -5,7 +5,8 @@ namespace WCS\CoavBundle\Controller;
 use WCS\CoavBundle\Entity\Flight;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Flight controller.
@@ -82,7 +83,7 @@ class FlightController extends Controller
     public function editAction(Request $request, Flight $flight)
     {
         $deleteForm = $this->createDeleteForm($flight);
-        $editForm = $this->createForm('WCS\CoavBundle\Form\flightType', $flight);
+        $editForm = $this->createForm('WCS\CoavBundle\Form\FlightType', $flight);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -121,7 +122,7 @@ class FlightController extends Controller
     /**
      * Creates a form to delete a flight entity.
      *
-     * @param flight $flight The flight entity
+     * @param Flight $flight The flight entity
      *
      * @return \Symfony\Component\Form\Form The form
      */

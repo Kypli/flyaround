@@ -12,14 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Flight
 {
-
-    /**
-     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", mappedBy="flights")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $reservations;
-
-
     /**
      * @var int
      *
@@ -48,28 +40,28 @@ class Flight
     /**
      * @var int
      *
-     * @ORM\Column(name="nbFreeSeats", type="smallint", nullable=true)
+     * @ORM\Column(name="nbFreeSeats", type="smallint", nullable=false)
      */
     private $nbFreeSeats;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="seatPrice", type="float")
+     * @ORM\Column(name="seatPrice", type="float", nullable=false)
      */
     private $seatPrice;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="takeOffTime", type="datetime", nullable=true)
+     * @ORM\Column(name="takeOffTime", type="datetime", nullable=false)
      */
     private $takeOffTime;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publicationDate", type="datetime")
+     * @ORM\Column(name="publicationDate", type="datetime", nullable=false)
      */
     private $publicationDate;
 
@@ -88,21 +80,28 @@ class Flight
      */
     private $pilot;
 
+
     /**
      * @var string
      *
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\PlaneModel")
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\PlaneModel", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $plane;
 
+
     /**
      * @var bool
      *
-     * @ORM\Column(name="wasDone", type="boolean")
+     * @ORM\Column(name="wasDone", type="boolean", nullable=false)
      */
     private $wasDone;
 
+
+    public function __toString()
+    {
+        return $this->description;
+    }
 
     /**
      * Get id
@@ -352,46 +351,5 @@ class Flight
     public function getWasDone()
     {
         return $this->wasDone;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add reservation
-     *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
-     *
-     * @return Flight
-     */
-    public function addReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations[] = $reservation;
-
-        return $this;
-    }
-
-    /**
-     * Remove reservation
-     *
-     * @param \WCS\CoavBundle\Entity\Reservation $reservation
-     */
-    public function removeReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
-    {
-        $this->reservations->removeElement($reservation);
-    }
-
-    /**
-     * Get reservations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReservations()
-    {
-        return $this->reservations;
     }
 }

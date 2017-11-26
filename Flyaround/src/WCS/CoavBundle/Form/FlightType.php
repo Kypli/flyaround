@@ -22,7 +22,7 @@ class FlightType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WCS\CoavBundle\Entity\flight'
+            'data_class' => 'WCS\CoavBundle\Entity\Flight'
         ));
     }
 

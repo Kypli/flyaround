@@ -2,7 +2,7 @@
 
 namespace WCS\CoavBundle\Controller;
 
-use WCS\CoavBundle\Entity\terrain;
+use WCS\CoavBundle\Entity\Terrain;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,7 +37,7 @@ class TerrainController extends Controller
      * @Route("/{id}", name="terrain_show")
      * @Method("GET")
      */
-    public function showAction(terrain $terrain)
+    public function showAction(Terrain $terrain)
     {
 
         return $this->render('terrain/show.html.twig', array(

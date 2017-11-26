@@ -4,7 +4,7 @@ namespace WCS\CoavBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class terrainControllerTest extends WebTestCase
+class TerrainControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
