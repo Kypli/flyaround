@@ -11,7 +11,6 @@ use Symfony\Component\Debug\Debug;
 //umask(0000);
 
 set_time_limit(0);
-
 require __DIR__.'/../vendor/autoload.php';
 
 $input = new ArgvInput();
