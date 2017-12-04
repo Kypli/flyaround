@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-
-
     /**
      * @var int
      *

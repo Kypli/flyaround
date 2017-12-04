@@ -2,9 +2,15 @@
 
 namespace WCS\CoavBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ReviewType extends AbstractType
 {
@@ -32,7 +38,7 @@ class ReviewType extends AbstractType
                 'mapped' => false
             ))
             ->add('userRated', EntityType::class, array(
-                'class' => 'Wcs\CoavBundle\Entity\User',
+                'class' => 'WCS\CoavBundle\Entity\User',
                 'query_builder' => function (EntityRepository $error) {
                     return $error->createQueryBuilder('alias')
                         ->orderBy('alias.lastName', 'ASC');
