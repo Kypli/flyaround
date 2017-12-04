@@ -14,10 +14,31 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text')
-            ->add('publicationDate')
-            ->add('note')
-            ->add('userRated')
+            ->add('text', TextareaType::class, array(
+                'attr' => array(
+                    'maxlength' => 250,
+                    'label' => 'Description'
+                )))
+            ->add('publicationDate', DateType::class, array(
+                'data' => new \DateTime('now'
+                )))
+            ->add('note', IntegerType::class, array(
+                'attr' => array(
+                    'min' => 0,
+                    'max' => 5,
+                    'label' => 'Note'
+                )))
+            ->add('agreeTerms', CheckboxType::class, array(
+                'mapped' => false
+            ))
+            ->add('userRated', EntityType::class, array(
+                'class' => 'Wcs\CoavBundle\Entity\User',
+                'query_builder' => function (EntityRepository $error) {
+                    return $error->createQueryBuilder('alias')
+                        ->orderBy('alias.lastName', 'ASC');
+                },
+                'choice_label' => 'phoneNumber'
+            ))
             ->add('reviewAuthor');
     }
     
