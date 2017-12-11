@@ -2,15 +2,11 @@
 
 namespace WCS\CoavBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use WCS\CoavBundle\Entity\User;
 
 class ReviewType extends AbstractType
 {
@@ -20,34 +16,19 @@ class ReviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextareaType::class, array(
-                'attr' => array(
-                    'maxlength' => 250,
-                    'label' => 'Description'
-                )))
-            ->add('publicationDate', DateType::class, array(
-                'data' => new \DateTime('now'
-                )))
-            ->add('note', IntegerType::class, array(
-                'attr' => array(
-                    'min' => 0,
-                    'max' => 5,
-                    'label' => 'Note'
-                )))
-            ->add('agreeTerms', CheckboxType::class, array(
-                'mapped' => false
-            ))
-            ->add('userRated', EntityType::class, array(
-                'class' => 'WCS\CoavBundle\Entity\User',
-                'query_builder' => function (EntityRepository $error) {
-                    return $error->createQueryBuilder('alias')
-                        ->orderBy('alias.lastName', 'ASC');
-                },
-                'choice_label' => 'phoneNumber'
-            ))
-            ->add('reviewAuthor');
+            ->add('text')
+            ->add('userRated', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'lastName',
+            ])
+            ->add('reviewAuthor', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'lastName',
+            ])
+            ->add('publicationDate')
+            ->add('note');
     }
-    
+
     /**
      * {@inheritdoc}
      */

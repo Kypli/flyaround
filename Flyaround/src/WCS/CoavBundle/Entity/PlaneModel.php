@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PlaneModel
 {
+
     /**
      * @var int
      *
@@ -24,47 +25,37 @@ class PlaneModel
     /**
      * @var string
      *
-     * @ORM\Column(name="model", type="string", length=128, nullable=false)
+     * @ORM\Column(name="model", type="string", length=128)
      */
     private $model;
 
     /**
-    * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="plane")
-    */
-    private $planes;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="manufacturer", type="string", length=64)
+     * @ORM\Column(name="manufacturer", type="string", length=64, nullable=true)
      */
     private $manufacturer;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="cruiseSpeed", type="smallint")
+     * @ORM\Column(name="cruiseSpeed", type="smallint", nullable=true)
      */
     private $cruiseSpeed;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="planeNbSeats", type="smallint", nullable=false)
+     * @ORM\Column(name="planeNbSeats", type="smallint")
      */
     private $planeNbSeats;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isAvailable", type="boolean", nullable=false)
+     * @ORM\Column(name="isAvailable", type="boolean")
      */
     private $isAvailable;
-
-    public function __toString()
-    {
-        return $this->model;
-    }
 
 
     /**
@@ -195,46 +186,5 @@ class PlaneModel
     public function getIsAvailable()
     {
         return $this->isAvailable;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->planes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add plane
-     *
-     * @param \WCS\CoavBundle\Entity\Flight $plane
-     *
-     * @return PlaneModel
-     */
-    public function addPlane(\WCS\CoavBundle\Entity\Flight $plane)
-    {
-        $this->planes[] = $plane;
-
-        return $this;
-    }
-
-    /**
-     * Remove plane
-     *
-     * @param \WCS\CoavBundle\Entity\Flight $plane
-     */
-    public function removePlane(\WCS\CoavBundle\Entity\Flight $plane)
-    {
-        $this->planes->removeElement($plane);
-    }
-
-    /**
-     * Get planes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPlanes()
-    {
-        return $this->planes;
     }
 }

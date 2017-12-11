@@ -33,19 +33,15 @@ class Reservation
      *
      * @ORM\Column(name="publicationDate", type="datetime")
      */
-
     private $publicationDate;
 
     /**
-    * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\User", mappedBy="passengers")
+     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\User", mappedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $passengers;
 
-
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Flight", inversedBy="flights")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -54,7 +50,7 @@ class Reservation
     /**
      * @var bool
      *
-     * @ORM\Column(name="wasDone", type="boolean", nullable=false)
+     * @ORM\Column(name="wasDone", type="boolean")
      */
     private $wasDone;
 
@@ -118,30 +114,6 @@ class Reservation
     }
 
     /**
-     * Set passenger
-     *
-     * @param string $passenger
-     *
-     * @return Reservation
-     */
-    public function setPassenger($passenger)
-    {
-        $this->passenger = $passenger;
-
-        return $this;
-    }
-
-    /**
-     * Get passenger
-     *
-     * @return string
-     */
-    public function getPassenger()
-    {
-        return $this->passenger;
-    }
-
-    /**
      * Set flight
      *
      * @param string $flight
@@ -188,12 +160,38 @@ class Reservation
     {
         return $this->wasDone;
     }
+
+
+    /**
+     * Add flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     *
+     * @return Reservation
+     */
+    public function addFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    {
+        $this->flight[] = $flight;
+
+        return $this;
+    }
+
+    /**
+     * Remove flight
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $flight
+     */
+    public function removeFlight(\WCS\CoavBundle\Entity\Flight $flight)
+    {
+        $this->flight->removeElement($flight);
+    }
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->passenger = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->passengers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->flight = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -205,7 +203,7 @@ class Reservation
      */
     public function addPassenger(\WCS\CoavBundle\Entity\User $passenger)
     {
-        $this->passenger[] = $passenger;
+        $this->passengers[] = $passenger;
 
         return $this;
     }
@@ -217,7 +215,7 @@ class Reservation
      */
     public function removePassenger(\WCS\CoavBundle\Entity\User $passenger)
     {
-        $this->passenger->removeElement($passenger);
+        $this->passengers->removeElement($passenger);
     }
 
     /**

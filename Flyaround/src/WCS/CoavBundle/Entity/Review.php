@@ -12,13 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Review
 {
-
-    public function __toString()
-    {
-        return $this->text . "-" . $this->userRated . $this->reviewAuthor . $this->publicationDate->format("d/m/Y") . $this->note;
-    }
-
-
     /**
      * @var int
      *
@@ -31,21 +24,17 @@ class Review
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text", nullable=false)
+     * @ORM\Column(name="text", type="text")
      */
     private $text;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="userRateds")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userRated;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="reviewAuthors")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -54,14 +43,14 @@ class Review
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publicationDate", type="datetime", nullable=false)
+     * @ORM\Column(name="publicationDate", type="datetime")
      */
     private $publicationDate;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="note", type="smallint", nullable=false)
+     * @ORM\Column(name="note", type="smallint")
      */
     private $note;
 
@@ -194,46 +183,5 @@ class Review
     public function getNote()
     {
         return $this->note;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reviewss = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add reviewss
-     *
-     * @param \WCS\CoavBundle\Entity\User $reviewss
-     *
-     * @return Review
-     */
-    public function addReviewss(\WCS\CoavBundle\Entity\User $reviewss)
-    {
-        $this->reviewss[] = $reviewss;
-
-        return $this;
-    }
-
-    /**
-     * Remove reviewss
-     *
-     * @param \WCS\CoavBundle\Entity\User $reviewss
-     */
-    public function removeReviewss(\WCS\CoavBundle\Entity\User $reviewss)
-    {
-        $this->reviewss->removeElement($reviewss);
-    }
-
-    /**
-     * Get reviewss
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getReviewss()
-    {
-        return $this->reviewss;
     }
 }

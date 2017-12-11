@@ -1,10 +1,10 @@
 {
-    "name": "pierre Amboise",
+    "name": "stevendsb/flyaround",
     "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "":"src"
+            "WCS\\": "src/WCS"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -13,8 +13,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "":"src"
+            "Tests\\": "tests/"
         },
         "files": [
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"

@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Flight
 {
     /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", mappedBy="flight")
+     */
+    private $flights;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,16 +27,12 @@ class Flight
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain", inversedBy="departures")
      * @ORM\JoinColumn(nullable=false)
      */
     private $departure;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Terrain", inversedBy="arrivals")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -40,28 +41,28 @@ class Flight
     /**
      * @var int
      *
-     * @ORM\Column(name="nbFreeSeats", type="smallint", nullable=false)
+     * @ORM\Column(name="nbFreeSeats", type="smallint")
      */
     private $nbFreeSeats;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="seatPrice", type="float", nullable=false)
+     * @ORM\Column(name="seatPrice", type="float")
      */
     private $seatPrice;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="takeOffTime", type="datetime", nullable=false)
+     * @ORM\Column(name="takeOffTime", type="datetime")
      */
     private $takeOffTime;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publicationDate", type="datetime", nullable=false)
+     * @ORM\Column(name="publicationDate", type="datetime")
      */
     private $publicationDate;
 
@@ -73,35 +74,24 @@ class Flight
     private $description;
 
     /**
-     * @var string
-     *
      * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\User", inversedBy="pilots")
      * @ORM\JoinColumn(nullable=false)
      */
     private $pilot;
 
-
     /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\PlaneModel", inversedBy="planes")
+     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\PlaneModel")
      * @ORM\JoinColumn(nullable=false)
      */
     private $plane;
 
-
     /**
      * @var bool
      *
-     * @ORM\Column(name="wasDone", type="boolean", nullable=false)
+     * @ORM\Column(name="wasDone", type="boolean")
      */
     private $wasDone;
 
-
-    public function __toString()
-    {
-        return $this->description;
-    }
 
     /**
      * Get id
@@ -351,5 +341,70 @@ class Flight
     public function getWasDone()
     {
         return $this->wasDone;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->flights = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add flight
+     *
+     * @param \WCS\CoavBundle\Entity\Reservation $flight
+     *
+     * @return Flight
+     */
+    public function addFlight(\WCS\CoavBundle\Entity\Reservation $flight)
+    {
+        $this->flights[] = $flight;
+
+        return $this;
+    }
+
+    /**
+     * Remove flight
+     *
+     * @param \WCS\CoavBundle\Entity\Reservation $flight
+     */
+    public function removeFlight(\WCS\CoavBundle\Entity\Reservation $flight)
+    {
+        $this->flights->removeElement($flight);
+    }
+
+    /**
+     * Get flights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFlights()
+    {
+        return $this->flights;
+    }
+
+    /**
+     * Set arrivals
+     *
+     * @param \WCS\CoavBundle\Entity\Terrain $arrivals
+     *
+     * @return Flight
+     */
+    public function setArrivals(\WCS\CoavBundle\Entity\Terrain $arrivals)
+    {
+        $this->arrivals = $arrivals;
+
+        return $this;
+    }
+
+    /**
+     * Get arrivals
+     *
+     * @return \WCS\CoavBundle\Entity\Terrain
+     */
+    public function getArrivals()
+    {
+        return $this->arrivals;
     }
 }

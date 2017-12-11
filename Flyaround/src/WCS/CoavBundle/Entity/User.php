@@ -13,6 +13,27 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="pilot")
+     */
+    private $pilots;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="userRated")
+     */
+    private $userRateds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="reviewAuthor")
+     */
+    private $reviewAuthors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", inversedBy="passengers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $reservations;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -22,79 +43,58 @@ class User
     private $id;
 
     /**
-    * @ORM\ManyToMany(targetEntity="WCS\CoavBundle\Entity\Reservation", inversedBy="passengers")
-    * @ORM\JoinColumn(nullable=false)
-    */
-    private $reservation;
-
-    /**
-    * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Flight", mappedBy="pilot")
-    */
-    private $pilots;
-
-    /**
-    * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="userRated")
-    */
-    private $userRateds;
-
-    /**
-    * @ORM\OneToMany(targetEntity="WCS\CoavBundle\Entity\Review", mappedBy="reviewAuthor")
-    */
-    private $reviewAuthors;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="userName", type="string", length=32, nullable=false)
+     * @ORM\Column(name="userName", type="string", length=32)
      */
     private $userName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=32, nullable=false)
+     * @ORM\Column(name="firstName", type="string", length=32)
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastName", type="string", length=32, nullable=false)
+     * @ORM\Column(name="lastName", type="string", length=32)
      */
     private $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=64, nullable=false)
+     * @ORM\Column(name="email", type="string", length=64)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phoneNumber", type="string", length=32, nullable=false)
+     * @ORM\Column(name="phoneNumber", type="string", length=32)
      */
     private $phoneNumber;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birthDate", type="date", nullable=false)
+     * @ORM\Column(name="birthDate", type="datetime")
      */
     private $birthDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creationDate", type="datetime", nullable=false)
+     * @ORM\Column(name="creationDate", type="datetime")
      */
     private $creationDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=16, nullable=false)
+     * @ORM\Column(name="role", type="string", length=16)
      */
     private $role;
 
@@ -104,15 +104,6 @@ class User
      * @ORM\Column(name="note", type="smallint", nullable=true)
      */
     private $note;
-
-
-    /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="WCS\CoavBundle\Entity\Review", inversedBy="reviewss")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $reviews;
 
     /**
      * @var bool
@@ -128,13 +119,6 @@ class User
      */
     private $isActive;
 
-    /**
-     * Custom method
-     */
-    public function __toString()
-    {
-        return $this->userName." ".$this->firstName;
-    }
 
     /**
      * Get id
@@ -362,29 +346,6 @@ class User
         return $this->note;
     }
 
-    /**
-     * Set reviews
-     *
-     * @param integer $reviews
-     *
-     * @return User
-     */
-    public function setReviews($reviews)
-    {
-        $this->reviews = $reviews;
-
-        return $this;
-    }
-
-    /**
-     * Get reviews
-     *
-     * @return int
-     */
-    public function getReviews()
-    {
-        return $this->reviews;
-    }
 
     /**
      * Set isACertifiedPilot
@@ -413,7 +374,7 @@ class User
     /**
      * Set isActive
      *
-     * @param string $isActive
+     * @param boolean $isActive
      *
      * @return User
      */
@@ -427,21 +388,19 @@ class User
     /**
      * Get isActive
      *
-     * @return string
+     * @return bool
      */
     public function getIsActive()
     {
         return $this->isActive;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->reservation = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pilots = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->userRateds = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reviewAuthors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -453,7 +412,7 @@ class User
      */
     public function addReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
     {
-        $this->reservation[] = $reservation;
+        $this->reservations[] = $reservation;
 
         return $this;
     }
@@ -465,51 +424,17 @@ class User
      */
     public function removeReservation(\WCS\CoavBundle\Entity\Reservation $reservation)
     {
-        $this->reservation->removeElement($reservation);
+        $this->reservations->removeElement($reservation);
     }
 
     /**
-     * Get reservation
+     * Get reservations
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getReservation()
+    public function getReservations()
     {
-        return $this->reservation;
-    }
-
-    /**
-     * Add pilot
-     *
-     * @param \WCS\CoavBundle\Entity\Flight $pilot
-     *
-     * @return User
-     */
-    public function addPilot(\WCS\CoavBundle\Entity\Flight $pilot)
-    {
-        $this->pilots[] = $pilot;
-
-        return $this;
-    }
-
-    /**
-     * Remove pilot
-     *
-     * @param \WCS\CoavBundle\Entity\Flight $pilot
-     */
-    public function removePilot(\WCS\CoavBundle\Entity\Flight $pilot)
-    {
-        $this->pilots->removeElement($pilot);
-    }
-
-    /**
-     * Get pilots
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPilots()
-    {
-        return $this->pilots;
+        return $this->reservations;
     }
 
     /**
@@ -578,5 +503,39 @@ class User
     public function getReviewAuthors()
     {
         return $this->reviewAuthors;
+    }
+
+    /**
+     * Add pilot
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $pilot
+     *
+     * @return User
+     */
+    public function addPilot(\WCS\CoavBundle\Entity\Flight $pilot)
+    {
+        $this->pilots[] = $pilot;
+
+        return $this;
+    }
+
+    /**
+     * Remove pilot
+     *
+     * @param \WCS\CoavBundle\Entity\Flight $pilot
+     */
+    public function removePilot(\WCS\CoavBundle\Entity\Flight $pilot)
+    {
+        $this->pilots->removeElement($pilot);
+    }
+
+    /**
+     * Get pilots
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPilots()
+    {
+        return $this->pilots;
     }
 }
