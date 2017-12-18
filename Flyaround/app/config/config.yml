@@ -69,12 +69,12 @@ swiftmailer:
     spool: { type: memory }
 
 fos_user:
-    db_driver: orm
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
-    user_class: AppBundle\Entity\User
+    user_class: WCS\CoavBundle\Entity\User
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
     registration:
         form:
-            type: AppBundle\Form\FosType
+            type: WCS\CoavBundle\Form\RegistrationType
